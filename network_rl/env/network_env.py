@@ -101,12 +101,24 @@ class NetworkRoutingEnv(gym.Env):
         failure_prob: float = 0.005,
         mean_load:    float = 0.4,
         use_mm1:      bool  = True,
+        w_delay:      float = 10.0,
+        w_drop:       float = 15.0,
     ):
         super().__init__()
         self.render_mode  = render_mode
         self.failure_prob = failure_prob
         self.mean_load    = mean_load
         self.use_mm1      = use_mm1
+
+        # Reward objective weights. Latency and reliability are competing
+        # objectives — a delay-greedy policy takes fast-but-lossy links, a
+        # reliability-greedy one takes slow-but-safe links. Exposing these as
+        # parameters lets us sweep the trade-off and trace a Pareto front
+        # instead of committing to a single hard-coded scalarisation.
+        #   w_delay: penalty per normalised ms of effective delay
+        #   w_drop:  penalty incurred when a packet is dropped on a lossy link
+        self.w_delay = w_delay
+        self.w_drop  = w_drop
 
         self.G = nx.Graph()
         self.G.add_nodes_from(range(NUM_NODES))
