@@ -66,6 +66,27 @@ def cohens_d(a: List[float], b: List[float]) -> float:
     return float((np.mean(a) - np.mean(b)) / pooled)
 
 
+def jain_fairness_index(values: List[float]) -> float:
+    """
+    Jain's fairness index (Jain, Chiu & Hawe, 1984):
+
+        J = (Σ xᵢ)² / (n · Σ xᵢ²)
+
+    Ranges from 1/n (one flow gets everything — maximally unfair) to 1.0
+    (every flow treated identically — perfectly fair). Computed here over a
+    per-flow allocation vector (e.g. per-(src,dst) delivery ratio or throughput)
+    so we can report *distributional* QoS, not just the aggregate mean that
+    hides whether a few flows are being starved.
+    """
+    x = np.asarray(values, dtype=float)
+    if x.size == 0:
+        return float("nan")
+    denom = x.size * float(np.sum(x ** 2))
+    if denom < 1e-12:        # all-zero allocation → treat as perfectly (un)fair-neutral
+        return 1.0
+    return float(np.sum(x) ** 2 / denom)
+
+
 def iqm(data: List[float]) -> float:
     """
     Inter-quartile Mean — robust estimator recommended by Agarwal et al. 2021.

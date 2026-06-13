@@ -15,6 +15,7 @@ from network_rl.analysis.statistics import (
     cohens_d,
     iqm,
     summarise_runs,
+    jain_fairness_index,
 )
 
 
@@ -60,6 +61,34 @@ def test_cohens_d_zero_when_identical():
 def test_iqm_trims_outliers():
     data = [1, 2, 3, 4, 5, 6, 7, 8, 1000]  # one wild outlier
     assert iqm(data) < np.mean(data)
+
+
+def test_jain_perfectly_fair_is_one():
+    assert jain_fairness_index([0.7, 0.7, 0.7, 0.7]) == pytest.approx(1.0)
+
+
+def test_jain_maximally_unfair_approaches_one_over_n():
+    # One flow served, n-1 starved → J = 1/n.
+    vec = [1.0] + [0.0] * 9
+    assert jain_fairness_index(vec) == pytest.approx(1.0 / 10)
+
+
+def test_jain_is_between_inv_n_and_one():
+    rng = np.random.default_rng(0)
+    vec = list(rng.random(20))
+    j = jain_fairness_index(vec)
+    assert 1.0 / 20 <= j <= 1.0
+
+
+def test_jain_uneven_is_less_fair_than_even():
+    even = jain_fairness_index([0.5, 0.5, 0.5, 0.5])
+    uneven = jain_fairness_index([0.9, 0.9, 0.1, 0.1])
+    assert uneven < even == pytest.approx(1.0)
+
+
+def test_jain_all_zero_is_defined():
+    # No flow served anywhere: denominator guard returns a finite value, not NaN.
+    assert jain_fairness_index([0.0, 0.0, 0.0]) == 1.0
 
 
 def test_summarise_runs_emits_real_pairwise_stats():

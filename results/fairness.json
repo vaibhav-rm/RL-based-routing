@@ -1,0 +1,47 @@
+{
+  "failure_rate": 20,
+  "results": {
+    "Rainbow": {
+      "mean_pdr": 0.9388888888888889,
+      "min_pdr": 0.25,
+      "jain_fairness": 0.9779489813388118,
+      "n_flows": 90
+    },
+    "DQN": {
+      "mean_pdr": 0.875,
+      "min_pdr": 0.0,
+      "jain_fairness": 0.9225941422594143,
+      "n_flows": 90
+    },
+    "GNN-DQN": {
+      "mean_pdr": 1.0,
+      "min_pdr": 1.0,
+      "jain_fairness": 1.0,
+      "n_flows": 90
+    },
+    "Q-Routing": {
+      "mean_pdr": 0.85,
+      "min_pdr": 0.0,
+      "jain_fairness": 0.92070796460177,
+      "n_flows": 90
+    },
+    "Dijkstra": {
+      "mean_pdr": 1.0,
+      "min_pdr": 1.0,
+      "jain_fairness": 1.0,
+      "n_flows": 90
+    },
+    "ECMP": {
+      "mean_pdr": 1.0,
+      "min_pdr": 1.0,
+      "jain_fairness": 1.0,
+      "n_flows": 90
+    },
+    "Random": {
+      "mean_pdr": 0.9944444444444445,
+      "min_pdr": 0.75,
+      "jain_fairness": 0.9986286426679134,
+      "n_flows": 90
+    }
+  }
+}
