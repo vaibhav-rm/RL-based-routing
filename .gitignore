@@ -1,0 +1,19 @@
+# Virtual environment (5+ GB, recreate from requirements.txt)
+.venv/
+venv/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local Claude Code / editor config
+.claude/settings.local.json
+
+# OS cruft
+.DS_Store
+
+# Note: models/ (trained .pth, ~9 MB), logs/ (training CSVs) and results/
+# (plots + evaluation JSON) ARE tracked — they are the project's deliverables.

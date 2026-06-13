@@ -1,0 +1,28 @@
+
+Ablation: Full Rainbow
+  seed=0  tail_mean=-137.1
+  seed=1  tail_mean=-116.2
+  seed=2  tail_mean=-118.7
+
+Ablation: − Dueling
+  seed=0  tail_mean=-169.4
+  seed=1  tail_mean=-161.1
+  seed=2  tail_mean=-156.9
+
+Ablation: − PER (uniform)
+  seed=0  tail_mean=-174.5
+  seed=1  tail_mean=-107.0
+  seed=2  tail_mean=-187.9
+
+Ablation: − n-step (n=1)
+  seed=0  tail_mean=-109.7
+  seed=1  tail_mean=-131.8
+  seed=2  tail_mean=-113.7
+
+Ablation: Vanilla DQN
+  seed=0  tail_mean=-113.3
+  seed=1  tail_mean=-103.9
+  seed=2  tail_mean=-138.9
+
+Ablation complete in 437s
+Ablation plot saved → /home/vaibhav/projects/RL_based_routing/experiments/../results/ablation.png

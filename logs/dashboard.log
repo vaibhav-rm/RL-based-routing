@@ -1,0 +1,9 @@
+Dashboard ready → http://127.0.0.1:5055
+ * Serving Flask app 'simulation_dashboard'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5055
+[33mPress CTRL+C to quit[0m
+127.0.0.1 - - [11/Jun/2026 00:11:09] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2026 00:11:09] "GET /api/state?fr_index=3 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2026 00:11:10] "POST /api/tick?fr_index=0 HTTP/1.1" 200 -
