@@ -69,32 +69,49 @@ outperforming static algorithms (Dijkstra, Random) especially under failure cond
 ```
 network_rl/
 ├── env/
-│   └── network_env.py          Custom Gymnasium environment
+│   ├── network_env.py          Custom Gymnasium environment (M/M/1, AR(1), failures)
+│   └── traffic_model.py        Self-similar (Pareto ON/OFF) background traffic
 ├── agents/
-│   └── dqn_agent.py            DQN with experience replay + target net
+│   ├── dqn_agent.py            Vanilla DQN (Double-DQN + target net + replay)
+│   ├── rainbow_agent.py        Rainbow: Dueling + PER + n-step + Double
+│   ├── gnn_agent.py            GNN-DQN (topology-agnostic message passing)
+│   ├── q_routing.py            Q-Routing (Boyan & Littman 1994, distributed)
+│   └── per_buffer.py           Prioritised experience replay buffer
 ├── baselines/
 │   ├── dijkstra.py             Dijkstra shortest-path (OSPF analog)
+│   ├── ecmp.py                 Equal-Cost Multi-Path (RFC 2991/2992)
 │   └── random_routing.py       Random / flooding baseline
+├── analysis/
+│   ├── statistics.py           Bootstrap CIs, Welch t-test, Cohen's d, IQM
+│   └── convergence.py          Convergence episode / sample-efficiency metrics
 ├── real_network/
 │   ├── probe_server.py         UDP echo server (runs on each real node)
 │   ├── probe_client.py         Sends probes, measures RTT/loss
-│   ├── real_env_adapter.py     Maps real probe metrics to the agent state vector
+│   ├── real_env_adapter.py     Maps real probe metrics to the 70-dim state vector
 │   ├── routing_controller.py   Control plane: loads model, makes routing decisions
 │   ├── dashboard.py            Rich CLI live decision dashboard
 │   ├── forwarder.py            Data plane: per-node source-routing packet forwarder
 │   ├── data_plane.py           Controller that forwards real bytes + reroutes on failure
 │   └── virtual_demo.py         Single-laptop end-to-end data delivery + failure demo
-├── models/
-│   └── dqn_trained.pth         Saved after training
-├── results/                    Auto-created — plots land here
-├── train.py                    Training script (simulated)
-├── evaluate.py                 Comparison & plots
-├── visualize.py                Topology & heatmap
-├── simulation_dashboard.py     Web dashboard (validated results + live animation)
-├── requirements.txt
-├── README.md
-├── PRESENTATION_GUIDE.md       Demo script + readiness assessment
-└── setup_real_network.md       Step-by-step real network guide
+experiments/
+├── config.py                   YAML experiment configuration
+├── sweep.py                    Hyperparameter sweep
+├── ablation.py                 Ablation study
+└── generalisation_test.py      Unseen-topology transfer test
+tests/                          pytest suite (46 tests) — env, agents, baselines, stats
+models/                         Trained weights (*.pth) and Q-tables (*.json)
+logs/                           Per-seed training CSVs
+results/                        Evaluation JSON + publication plots
+archive/                        Superseded artifacts (see archive/README.md)
+train.py                        Multi-seed / curriculum training
+evaluate.py                     7-algorithm comparison & plots
+visualize.py                    Topology & congestion heatmaps
+simulation_dashboard.py         Web dashboard (validated results + live animation)
+pytest.ini                      Test config
+requirements.txt
+README.md
+PRESENTATION_GUIDE.md           Demo script + readiness assessment
+setup_real_network.md           Step-by-step real network guide
 ```
 
 ---
@@ -189,9 +206,27 @@ structure-aware GNN are needed.
 
 ---
 
+## Testing
+
+A `pytest` suite (46 tests) covers the environment contract, the classical
+baselines, the learning agents, and the statistical utilities:
+
+```bash
+pip install -r requirements.txt   # includes pytest
+pytest                            # ~6 s, 46 tests
+```
+
+The most important guards are
+`tests/test_agents.py::test_*_eval_mode_is_deterministic_not_random`, which pin
+the inference-determinism fix — a loaded agent at ε=0 must read its Q-values
+deterministically rather than falling back to random routing.
+
+---
+
 ## Requirements
 
 - Python 3.10+
 - PyTorch ≥ 2.0
 - Gymnasium ≥ 0.29
 - NetworkX, Matplotlib, Seaborn, NumPy, Rich
+- pytest (for the test suite)
