@@ -4,6 +4,11 @@ A Computer Networks project demonstrating how a Deep Q-Network (DQN) agent learn
 to route packets optimally under dynamic traffic loads and random link failures —
 outperforming static algorithms (Dijkstra, Random) especially under failure conditions.
 
+**Documentation:**
+- [`docs/HOW_IT_WORKS.md`](docs/HOW_IT_WORKS.md) — technical walkthrough of every component and the data flow.
+- [`docs/SETUP_AND_DEMO.md`](docs/SETUP_AND_DEMO.md) — install + demo (simulation on one laptop, and on hardware).
+- [`paper/`](paper/) — the IEEE conference paper (`RL_Adaptive_Routing.docx`) and pitch deck (`RL_Routing_Pitch.pptx`), regenerable via `build_paper.py` / `build_deck.py`.
+
 ---
 
 ## ASCII Architecture Diagram
