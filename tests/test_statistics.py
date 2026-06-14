@@ -16,6 +16,7 @@ from network_rl.analysis.statistics import (
     iqm,
     summarise_runs,
     jain_fairness_index,
+    pareto_front,
 )
 
 
@@ -89,6 +90,25 @@ def test_jain_uneven_is_less_fair_than_even():
 def test_jain_all_zero_is_defined():
     # No flow served anywhere: denominator guard returns a finite value, not NaN.
     assert jain_fairness_index([0.0, 0.0, 0.0]) == 1.0
+
+
+def test_pareto_front_drops_dominated_points():
+    # Lower is better on both axes. (2,2) dominates (3,3); (1,5) and (5,1) are
+    # each non-dominated trade-offs.
+    pts = [[1, 5], [5, 1], [2, 2], [3, 3]]
+    front = set(pareto_front(pts))
+    assert front == {0, 1, 2}           # index 3 (3,3) is dominated by (2,2)
+
+
+def test_pareto_front_all_nondominated_when_strict_tradeoff():
+    # A clean decreasing trade-off: every point is on the frontier.
+    pts = [[1, 4], [2, 3], [3, 2], [4, 1]]
+    assert set(pareto_front(pts)) == {0, 1, 2, 3}
+
+
+def test_pareto_front_single_winner_dominates_all():
+    pts = [[1, 1], [2, 2], [3, 3]]
+    assert set(pareto_front(pts)) == {0}
 
 
 def test_summarise_runs_emits_real_pairwise_stats():

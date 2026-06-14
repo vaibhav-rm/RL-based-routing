@@ -22,14 +22,12 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import torch.nn as nn
 import torch
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from network_rl.env.network_env import NetworkRoutingEnv, OBS_DIM
-from network_rl.agents.rainbow_agent import RainbowAgent, DuelingQNetwork
-from network_rl.agents.dqn_agent    import QNetwork as VanillaQNetwork, DQNAgent
+from network_rl.agents.rainbow_agent import RainbowAgent
 
 RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "results")
 os.makedirs(RESULTS_DIR, exist_ok=True)
@@ -65,8 +63,6 @@ def train_ablation(cfg: dict, episodes: int, seed: int) -> list:
         agent.optimizer = torch.optim.Adam(agent.policy_net.parameters(), lr=5e-4)
 
     rewards = []
-    window  = []
-    WINDOW  = 20
 
     for ep in range(episodes):
         obs, _ = env.reset()
@@ -148,8 +144,8 @@ def run_ablation(episodes: int = 400, n_seeds: int = 3):
     stds   = [summary[n]["std"]  for n in names]
     y_pos  = np.arange(len(names))
     colors_bar = plt.cm.tab10(np.linspace(0, 1, len(names)))
-    bars = ax2.barh(y_pos, means, xerr=stds, color=colors_bar,
-                    align="center", alpha=0.85, capsize=4)
+    ax2.barh(y_pos, means, xerr=stds, color=colors_bar,
+             align="center", alpha=0.85, capsize=4)
     ax2.set_yticks(y_pos)
     ax2.set_yticklabels(names, fontsize=9)
     ax2.set_xlabel("Mean Convergence Reward (final 20%)")
