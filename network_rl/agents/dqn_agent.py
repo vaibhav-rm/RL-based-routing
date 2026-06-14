@@ -12,7 +12,6 @@ CN concepts:
 
 import random
 from collections import deque
-from typing import Tuple
 
 import numpy as np
 import torch
@@ -186,7 +185,7 @@ class DQNAgent:
             q_next = self.target_net(next_states_t).gather(1, next_actions.unsqueeze(1)).squeeze(1)
             q_target = rewards_t + self.gamma * q_next * (1.0 - dones_t)
 
-        loss = nn.MSELoss()(q_current, q_target)
+        loss = nn.MSELoss()(q_current, q_target) + self._extra_loss()
         self.optimizer.zero_grad()
         loss.backward()
         nn.utils.clip_grad_norm_(self.policy_net.parameters(), 1.0)
@@ -194,6 +193,14 @@ class DQNAgent:
 
         self.steps += 1
         return float(loss.item())
+
+    def _extra_loss(self):
+        """
+        Hook for subclasses to add an auxiliary loss term (e.g. a continual-
+        learning regulariser) to the TD loss before backprop. The base agent has
+        none, so this returns 0.0 and leaves training bit-for-bit unchanged.
+        """
+        return 0.0
 
     def decay_epsilon(self):
         self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)

@@ -1,0 +1,49 @@
+{
+  "tasks": {
+    "A": [
+      7,
+      8,
+      9
+    ],
+    "B": [
+      0,
+      1,
+      2
+    ]
+  },
+  "episodes": 250,
+  "seeds": 4,
+  "ewc_lambda": 10.0,
+  "results": {
+    "naive": {
+      "A_after_A": 0.76625,
+      "A_after_B": 0.0925,
+      "B_after_B": 0.8475,
+      "forgetting": 0.67375,
+      "A_after_A_std": 0.05212664865498261,
+      "A_after_B_std": 0.10090218035305283,
+      "B_after_B_std": 0.04007804885470351,
+      "forgetting_std": 0.12734672159109553
+    },
+    "rehearsal": {
+      "A_after_A": 0.8024999999999999,
+      "A_after_B": 0.82875,
+      "B_after_B": 0.845,
+      "forgetting": -0.026249999999999996,
+      "A_after_A_std": 0.0505593710403917,
+      "A_after_B_std": 0.04435298749802542,
+      "B_after_B_std": 0.06745368781616023,
+      "forgetting_std": 0.03542156828826187
+    },
+    "ewc": {
+      "A_after_A": 0.8200000000000001,
+      "A_after_B": 0.10750000000000001,
+      "B_after_B": 0.875,
+      "forgetting": 0.7125,
+      "A_after_A_std": 0.041079191812887446,
+      "A_after_B_std": 0.09503288904374106,
+      "B_after_B_std": 0.05159941860137574,
+      "forgetting_std": 0.1076162162501544
+    }
+  }
+}
