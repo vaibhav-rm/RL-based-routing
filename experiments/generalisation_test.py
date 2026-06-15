@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from network_rl.env.network_env import NetworkRoutingEnv, OBS_DIM, TOPOLOGY_EDGES
+from network_rl.env.network_env import NetworkRoutingEnv, OBS_DIM
 from network_rl.agents.dqn_agent     import DQNAgent
 from network_rl.agents.rainbow_agent import RainbowAgent
 from network_rl.agents.gnn_agent     import GNNAgent

@@ -87,6 +87,27 @@ def jain_fairness_index(values: List[float]) -> float:
     return float(np.sum(x) ** 2 / denom)
 
 
+def pareto_front(points: List[List[float]]) -> List[int]:
+    """
+    Indices of the non-dominated (Pareto-optimal) points, lower-is-better on every
+    objective axis. Point a dominates b iff a ≤ b on every objective and a < b on
+    at least one. Used to identify which reward-weight operating points trace the
+    achievable delay-vs-reliability frontier, instead of collapsing a genuinely
+    multi-objective problem to a single hard-coded scalarisation.
+    """
+    pts = np.asarray(points, dtype=float)
+    n   = len(pts)
+    keep = []
+    for i in range(n):
+        dominated = any(
+            j != i and np.all(pts[j] <= pts[i]) and np.any(pts[j] < pts[i])
+            for j in range(n)
+        )
+        if not dominated:
+            keep.append(i)
+    return keep
+
+
 def iqm(data: List[float]) -> float:
     """
     Inter-quartile Mean — robust estimator recommended by Agarwal et al. 2021.

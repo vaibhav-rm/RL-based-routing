@@ -8,7 +8,7 @@ section.  All defaults are research-justified with citations.
 
 import os, yaml
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import List
 
 
 @dataclass

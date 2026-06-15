@@ -109,7 +109,7 @@ def run_sweep(episodes: int = 300, n_seeds: int = 3):
     out_json = os.path.join(RESULTS_DIR, "sweep_results.json")
     with open(out_json, "w") as f:
         json.dump(results, f, indent=2)
-    print(f"\nTop 5 configs:")
+    print("\nTop 5 configs:")
     for r in results[:5]:
         print(f"  lr={r['lr']:.0e}  alpha={r['per_alpha']}  n_step={r['n_step']}"
               f"  mean={r['mean']:+.1f} ± {r['std']:.1f}")

@@ -21,7 +21,7 @@ import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
 import networkx as nx
-from typing import Optional, Tuple, Dict, Any, List
+from typing import Optional, Tuple, Dict, List
 
 
 # ── Topology ────────────────────────────────────────────────────────────────
@@ -51,7 +51,6 @@ NUM_EDGES   = len(TOPOLOGY_EDGES)
 PACKET_BITS = 1500 * 8         # 1500-byte Ethernet MTU in bits
 MAX_STEPS   = 50
 LOOP_PENALTY = -20.0
-DROP_PENALTY  = -15.0
 
 # Extended obs: 4 features per edge + 2 node scalars
 OBS_DIM = NUM_EDGES * 4 + 2
@@ -192,10 +191,10 @@ class NetworkRoutingEnv(gym.Env):
                 delay = bd * (1.0 + 3.0 * cong)
 
             self.episode_delays.append(delay)
-            reward -= delay / self.MAX_DELAY_NORM * 10.0
+            reward -= delay / self.MAX_DELAY_NORM * self.w_delay
 
             if self.np_random.random() < edge["loss_rate"]:
-                reward += DROP_PENALTY
+                reward -= self.w_drop
                 self.episode_drops += 1
 
         if next_node in self._visited:

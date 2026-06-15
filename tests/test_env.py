@@ -39,6 +39,45 @@ def test_reset_is_seed_deterministic():
     np.testing.assert_array_equal(obs_a, obs_b)
 
 
+def _fixed_action_reward(env, n_steps=40, action=0):
+    """Total reward from a fixed-action rollout (deterministic given the seed)."""
+    env.reset(seed=123)
+    total, done, steps = 0.0, False, 0
+    while not done and steps < n_steps:
+        _, r, term, trunc, _ = env.step(action)
+        total += r
+        done = term or trunc
+        steps += 1
+    return total
+
+
+def test_default_reward_weights_match_legacy_constants():
+    # Wiring w_delay/w_drop into step() must be behaviour-preserving: the defaults
+    # (10, 15) reproduce the old hard-coded delay multiplier and drop penalty.
+    # Two identically-seeded envs fed the same actions stay in RNG lockstep, so
+    # equal totals prove the reward stream is unchanged.
+    default  = _fixed_action_reward(NetworkRoutingEnv())
+    explicit = _fixed_action_reward(NetworkRoutingEnv(w_delay=10.0, w_drop=15.0))
+    assert default == pytest.approx(explicit)
+
+
+def test_higher_delay_weight_lowers_reward():
+    # Same seed + same actions ⇒ only the delay weight differs. A heavier delay
+    # penalty must yield a strictly lower cumulative reward over active links.
+    low  = _fixed_action_reward(NetworkRoutingEnv(w_delay=10.0))
+    high = _fixed_action_reward(NetworkRoutingEnv(w_delay=40.0))
+    assert high < low
+
+
+def test_higher_drop_weight_lowers_reward_under_loss():
+    # Near-saturation load drives high loss_rate, so drop events fire; identical
+    # RNG streams mean both envs drop on the same steps and the reward gap is
+    # purely the drop weight. Heavier drop penalty ⇒ lower reward.
+    low  = _fixed_action_reward(NetworkRoutingEnv(mean_load=0.95, w_drop=15.0))
+    high = _fixed_action_reward(NetworkRoutingEnv(mean_load=0.95, w_drop=80.0))
+    assert high < low
+
+
 def test_observation_space_contains_obs():
     env = NetworkRoutingEnv()
     obs, _ = env.reset(seed=1)

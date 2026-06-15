@@ -1,0 +1,53 @@
+{
+  "trained_nodes": 10,
+  "results": {
+    "10": {
+      "n_nodes": 10,
+      "n_edges": 17,
+      "gnn_pdr": 1.0,
+      "dijkstra_pdr": 1.0,
+      "random_pdr": 1.0,
+      "gnn_delay": 12.308573481011758,
+      "dijkstra_delay": 10.810157830653111,
+      "random_delay": 35.02241703411378,
+      "gnn_stretch": 1.1386118199042166,
+      "random_stretch": 3.23976925987193
+    },
+    "20": {
+      "n_nodes": 20,
+      "n_edges": 36,
+      "gnn_pdr": 1.0,
+      "dijkstra_pdr": 1.0,
+      "random_pdr": 1.0,
+      "gnn_delay": 18.487404095417208,
+      "dijkstra_delay": 16.914521738581744,
+      "random_delay": 98.2949848395212,
+      "gnn_stretch": 1.092990057959945,
+      "random_stretch": 5.811277809606167
+    },
+    "30": {
+      "n_nodes": 30,
+      "n_edges": 56,
+      "gnn_pdr": 1.0,
+      "dijkstra_pdr": 1.0,
+      "random_pdr": 1.0,
+      "gnn_delay": 20.54434225202418,
+      "dijkstra_delay": 18.92120396247733,
+      "random_delay": 143.47349557403987,
+      "gnn_stretch": 1.0857840913699626,
+      "random_stretch": 7.5826832086669755
+    },
+    "50": {
+      "n_nodes": 50,
+      "n_edges": 96,
+      "gnn_pdr": 1.0,
+      "dijkstra_pdr": 1.0,
+      "random_pdr": 0.925,
+      "gnn_delay": 26.621343342948386,
+      "dijkstra_delay": 21.884135228486233,
+      "random_delay": 234.4062248303378,
+      "gnn_stretch": 1.216467686065831,
+      "random_stretch": 10.711240009393423
+    }
+  }
+}

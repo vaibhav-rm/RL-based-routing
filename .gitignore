@@ -19,3 +19,6 @@ claude
 
 # Note: models/ (trained .pth, ~9 MB), logs/ (training CSVs) and results/
 # (plots + evaluation JSON) ARE tracked — they are the project's deliverables.
+
+# Generated PDF previews (regenerate from .docx/.pptx via LibreOffice)
+paper/*.pdf

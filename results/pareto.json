@@ -1,0 +1,95 @@
+{
+  "cross_algorithm": {
+    "failure_rate": 20,
+    "algorithms": {
+      "Rainbow": {
+        "delay": 15.546914102532849,
+        "pdr": 0.94,
+        "pareto_optimal": false
+      },
+      "DQN": {
+        "delay": 12.562817324946888,
+        "pdr": 0.8266666666666667,
+        "pareto_optimal": false
+      },
+      "GNN-DQN": {
+        "delay": 9.242092308136694,
+        "pdr": 1.0,
+        "pareto_optimal": true
+      },
+      "Q-Routing": {
+        "delay": 32.29589721115712,
+        "pdr": 0.4633333333333333,
+        "pareto_optimal": false
+      },
+      "Dijkstra": {
+        "delay": 14.445394789924277,
+        "pdr": 0.98,
+        "pareto_optimal": false
+      },
+      "ECMP": {
+        "delay": 13.825711899634829,
+        "pdr": 0.9533333333333334,
+        "pareto_optimal": false
+      },
+      "Random": {
+        "delay": 33.96947663773651,
+        "pdr": 0.9766666666666667,
+        "pareto_optimal": false
+      }
+    }
+  },
+  "learned_policy": {
+    "w_delay": 10.0,
+    "mean_load": 0.5,
+    "train_episodes": 350,
+    "seeds": 3,
+    "points": [
+      {
+        "w_drop": 0.0,
+        "delay": 14.370039169743611,
+        "delay_std": 2.0242109283204504,
+        "drops": 0.19555555555555557,
+        "drops_std": 0.07931808132255443,
+        "pdr": 0.7177777777777777,
+        "pareto_optimal": false
+      },
+      {
+        "w_drop": 5.0,
+        "delay": 13.183439607145255,
+        "delay_std": 1.510303808645618,
+        "drops": 0.19000000000000003,
+        "drops_std": 0.026246692913372716,
+        "pdr": 0.6911111111111111,
+        "pareto_optimal": false
+      },
+      {
+        "w_drop": 15.0,
+        "delay": 12.282184608054473,
+        "delay_std": 0.5483656437948456,
+        "drops": 0.20555555555555557,
+        "drops_std": 0.020427529234278045,
+        "pdr": 0.7011111111111111,
+        "pareto_optimal": true
+      },
+      {
+        "w_drop": 30.0,
+        "delay": 12.794737810686556,
+        "delay_std": 0.43393683377718906,
+        "drops": 0.16333333333333333,
+        "drops_std": 0.01247219128924647,
+        "pdr": 0.758888888888889,
+        "pareto_optimal": true
+      },
+      {
+        "w_drop": 60.0,
+        "delay": 12.813393353108138,
+        "delay_std": 0.8406215873361668,
+        "drops": 0.16555555555555557,
+        "drops_std": 0.026851213274654607,
+        "pdr": 0.75,
+        "pareto_optimal": false
+      }
+    ]
+  }
+}

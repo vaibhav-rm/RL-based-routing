@@ -11,9 +11,7 @@ loaded (eval-mode) net is always used directly.
 If anyone reintroduces the unconditional warmup, these fail.
 """
 
-import numpy as np
 import pytest
-import torch
 
 from network_rl.env.network_env import NetworkRoutingEnv, OBS_DIM
 from network_rl.agents.dqn_agent import DQNAgent
